@@ -1,8 +1,8 @@
-FROM superwang/base.ubuntu
+FROM isuper/base.ubuntu
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 RUN apt-get update && apt-get install ca-certificates curl -y 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && apt-get --purge autoremove && rm -rf /var/lib/apt/lists/*
 
 ENV VERSION 8
 ENV UPDATE 31
@@ -25,9 +25,7 @@ RUN update-alternatives --set javac "${JAVA_HOME}/bin/javac"
 
 RUN rm -rf /tmp/* && rm -rf /var/tmp/*
 
-RUN echo "${JAVA_HOME}"
-RUN java -version
-RUN javac -version
-
 ENTRYPOINT /bin/bash
+
+CMD java -version && javac -version
 

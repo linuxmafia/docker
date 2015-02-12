@@ -1,8 +1,8 @@
-FROM superwang/base.ubuntu
+FROM isuper/base.ubuntu
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 RUN apt-get update && apt-get install ca-certificates curl -y 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && apt-get --purge autoremove && rm -rf /var/lib/apt/lists/*
 
 ENV VERSION 7
 ENV UPDATE 76
