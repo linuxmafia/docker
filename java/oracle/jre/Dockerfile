@@ -1,4 +1,4 @@
-FROM isuper/base.ubuntu
+FROM isuper/base-ubuntu
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 RUN apt-get update && apt-get install ca-certificates curl -y 
