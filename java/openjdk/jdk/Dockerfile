@@ -1,7 +1,7 @@
 FROM isuper/base-ubuntu
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
-ENV VERSION 7
+ENV VERSION 8
 
 RUN apt-get update && apt-get install software-properties-common -y && add-apt-repository ppa:openjdk-r/ppa -y && apt-get update
 RUN apt-get install openjdk-"${VERSION}"-jdk -y --no-install-recommends
