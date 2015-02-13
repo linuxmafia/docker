@@ -4,8 +4,8 @@ MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 RUN apt-get update && apt-get install ca-certificates curl -y 
 RUN apt-get clean && apt-get --purge autoremove && rm -rf /var/lib/apt/lists/*
 
-ENV VERSION 8
-ENV UPDATE 31
+ENV VERSION 7
+ENV UPDATE 76
 ENV BUILD 13
 
 RUN curl --silent --location --retry 3 --cacert /etc/ssl/certs/GeoTrust_Global_CA.pem \
@@ -26,3 +26,4 @@ RUN rm -rf /tmp/* && rm -rf /var/tmp/*
 ENTRYPOINT /bin/bash
 
 CMD java -version
+
