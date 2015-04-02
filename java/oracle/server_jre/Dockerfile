@@ -5,8 +5,8 @@ RUN apt-get update && apt-get install ca-certificates curl -y
 RUN apt-get clean && apt-get --purge autoremove && rm -rf /var/lib/apt/lists/*
 
 ENV VERSION 8
-ENV UPDATE 31
-ENV BUILD 13
+ENV UPDATE 40
+ENV BUILD 26
 
 RUN curl --silent --location --retry 3 --cacert /etc/ssl/certs/GeoTrust_Global_CA.pem \
 	--header "Cookie: oraclelicense=accept-securebackup-cookie;" \
