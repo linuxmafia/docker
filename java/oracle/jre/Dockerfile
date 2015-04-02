@@ -22,7 +22,3 @@ RUN update-alternatives --set java "${JAVA_HOME}/bin/java"
 RUN update-alternatives --set javaws "${JAVA_HOME}/bin/javaws"
 
 RUN rm -rf /tmp/* && rm -rf /var/tmp/*
-
-ENTRYPOINT /bin/bash
-
-CMD java -version

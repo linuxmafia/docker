@@ -24,8 +24,3 @@ RUN update-alternatives --set javaws "${JAVA_HOME}/bin/javaws"
 RUN update-alternatives --set javac "${JAVA_HOME}/bin/javac"
 
 RUN rm -rf /tmp/* && rm -rf /var/tmp/*
-
-ENTRYPOINT /bin/bash
-
-CMD java -version && javac -version
-
