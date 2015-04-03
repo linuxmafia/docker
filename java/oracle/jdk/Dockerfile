@@ -22,9 +22,4 @@ RUN update-alternatives --set java "${JAVA_HOME}/bin/java"
 RUN update-alternatives --set javaws "${JAVA_HOME}/bin/javaws"
 RUN update-alternatives --set javac "${JAVA_HOME}/bin/javac"
 
-RUN curl --silent --location --retry 3 http://www.openssl.org/source/openssl-1.0.2a.tar.gz | tar xz -C /tmp
-RUN apt-get install -y gcc make libssl-dev --no-install-recommends && \
-        cd /tmp/openssl-1.0.2a && \
-	./config --prefix=/usr && make clean && make && make install
-
-RUN apt-get --purge -y remove gcc make libssl-dev && apt-get clean && apt-get --purge -y autoremove && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
+RUN apt-get autoclean && apt-get --purge -y autoremove && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
