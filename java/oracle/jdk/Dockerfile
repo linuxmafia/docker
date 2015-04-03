@@ -2,7 +2,6 @@ FROM isuper/base-ubuntu
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 RUN apt-get update && apt-get install ca-certificates curl -y 
-RUN apt-get clean && apt-get --purge autoremove && rm -rf /var/lib/apt/lists/*
 
 ENV VERSION 7
 ENV UPDATE 76
@@ -23,8 +22,9 @@ RUN update-alternatives --set java "${JAVA_HOME}/bin/java"
 RUN update-alternatives --set javaws "${JAVA_HOME}/bin/javaws"
 RUN update-alternatives --set javac "${JAVA_HOME}/bin/javac"
 
-RUN rm -rf /tmp/* && rm -rf /var/tmp/*
+RUN curl --silent --location --retry 3 http://www.openssl.org/source/openssl-1.0.2a.tar.gz | tar xz -C /tmp
+RUN apt-get install -y gcc make libssl-dev --no-install-recommends && \
+        cd /tmp/openssl-1.0.2a && \
+	./config --prefix=/usr && make clean && make && make install
 
-ENTRYPOINT /bin/bash
-
-CMD java -version && javac -version
+RUN apt-get --purge -y remove gcc make libssl-dev && apt-get clean && apt-get --purge -y autoremove && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
