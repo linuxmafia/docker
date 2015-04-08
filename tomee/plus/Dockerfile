@@ -7,7 +7,7 @@ ENV CATALINA_HOME /opt/apache-tomee-${VERSION}
 ENV PATH ${CATALINA_HOME}/bin:$PATH
 
 RUN curl --silent --location --retry 3 http://archive.apache.org/dist/tomee/tomee-"${VERSION}"/apache-tomee-"${VERSION}"-plus.tar.gz | tar xz -C /tmp && \
-	mv /tmp/apache-tomee-plus-${VERSION} ${CATALINA_HOME}
+	mv /tmp/apache-tomee-plus-${VERSION} ${CATALINA_HOME} && \
 	rm -rf ${CATALINA_HOME}/bin/*.bat && rm -rf ${CATALINA_HOME}/webapps/* && \
 	apt-get update && apt-get install -y --no-install-recommends gcc libc6-dev libssl-dev make && \
 	curl --silent --location --retry 3 http://www.apache.org/dist/apr/apr-1.5.1.tar.gz | tar xz -C /tmp && \
