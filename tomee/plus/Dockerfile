@@ -8,17 +8,17 @@ ENV PATH ${CATALINA_HOME}/bin:$PATH
 
 RUN curl --silent --location --retry 3 http://archive.apache.org/dist/tomee/tomee-"${VERSION}"/apache-tomee-"${VERSION}"-plus.tar.gz | tar xz -C /tmp && \
 	mv /tmp/apache-tomee-plus-${VERSION} ${CATALINA_HOME} && \
-	rm -rf ${CATALINA_HOME}/bin/*.bat && rm -rf ${CATALINA_HOME}/webapps/* && \
+	rm -rf ${CATALINA_HOME}/bin/*.bat ${CATALINA_HOME}/bin/*.exe ${CATALINA_HOME}/bin/*.original ${CATALINA_HOME}/bin/*.tar.gz ${CATALINA_HOME}/logs/* ${CATALINA_HOME}/temp/* ${CATALINA_HOME}/webapps/* ${CATALINA_HOME}/work/* && \
 	apt-get update && apt-get install -y --no-install-recommends gcc libc6-dev libssl-dev make && \
 	curl --silent --location --retry 3 http://www.apache.org/dist/apr/apr-1.5.1.tar.gz | tar xz -C /tmp && \
 	cd /tmp/apr-1.5.1 && ./configure && make clean && make && make install && \
 	curl --silent --location --retry 3 http://www.apache.org/dist/tomcat/tomcat-connectors/native/1.1.33/source/tomcat-native-1.1.33-src.tar.gz | tar xz -C /tmp && \
-	cd /tmp/tomcat-native-1.1.33-src/jni/native && ./configure -with-apr=/usr/local/apr/ -with-ssl=/usr -with-java-home=${JAVA_HOME} -prefix=/usr/lib/java -libdir=/usr/lib/java && make clean && make && make install && \
+	cd /tmp/tomcat-native-1.1.33-src/jni/native && ./configure -with-apr=/usr/local/apr/ -with-ssl=/usr -with-java-home=${JAVA_HOME} -prefix=${CATALINA_HOME} && make clean && make && make install && \
 	apt-get remove --purge --auto-remove -y gcc libc6-dev libssl-dev make && \
 	apt-get autoclean && apt-get --purge -y autoremove && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV LD_LIBRARY_PATH='$LD_LIBRARY_PATH:/usr/lib/java'
+ENV LD_LIBRARY_PATH='$LD_LIBRARY_PATH:${CATALINA_HOME}/lib'
 
 COPY files/conf/ ${CATALINA_HOME}/conf/
 
