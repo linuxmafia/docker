@@ -3,16 +3,10 @@ MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 ENV VERSION 7
 
-RUN apt-get update && apt-get install software-properties-common -y --no-install-recommends 
-RUN add-apt-repository ppa:openjdk-r/ppa -y && apt-get update
-RUN apt-get install openjdk-"${VERSION}"-jre -y --no-install-recommends
-RUN apt-get clean && apt-get --purge autoremove && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install software-properties-common -y --no-install-recommends && \
+	add-apt-repository ppa:openjdk-r/ppa -y && apt-get update && \
+	apt-get install openjdk-"${VERSION}"-jre -y --no-install-recommends && \
+	apt-get autoclean && apt-get --purge -y autoremove && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-openjdk-amd64
-
-RUN rm -rf /tmp/* && rm -rf /var/tmp/*
-
-ENTRYPOINT /bin/bash
-
-CMD java -version
-
