@@ -24,7 +24,6 @@ RUN curl --silent --location --retry 3 \
 	mkdir /data && \
 	mv ${CATALINA_HOME}/conf /data/conf && ln -s /data/conf ${CATALINA_HOME}/conf && \
 	mv ${CATALINA_HOME}/logs /data/logs && ln -s /data/logs ${CATALINA_HOME}/logs && \
-	mv ${CATALINA_HOME}/webapps /data/webapps && ln -s /data/webapps ${CATALINA_HOME}/webapps && \
 	mkdir /data/ssl && ln -s /data/ssl ${CATALINA_HOME}/ssl && \
 	apt-get update && apt-get install -y --no-install-recommends \
 		gcc \
@@ -51,7 +50,7 @@ RUN curl --silent --location --retry 3 \
 	apt-get autoclean && apt-get --purge -y autoremove && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV LD_LIBRARY_PATH='$LD_LIBRARY_PATH:${CATALINA_HOME}/lib'
+ENV LD_LIBRARY_PATH "${LD_LIBRARY_PATH}:${CATALINA_HOME}/lib"
 
 COPY files/conf/* ${CATALINA_HOME}/conf/
 RUN sed -i s/SHUTDOWN/`openssl rand -hex 8`/g ${CATALINA_HOME}/conf/server.xml
