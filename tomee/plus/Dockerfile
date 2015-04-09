@@ -57,13 +57,12 @@ RUN sed -i s/SHUTDOWN/`openssl rand -hex 8`/g ${CATALINA_HOME}/conf/server.xml
 
 COPY files/ssl/* ${CATALINA_HOME}/ssl/
 RUN openssl rand -hex 8 > ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt && \
-	openssl genrsa -out ${CATALINA_HOME}/ssl/${HOSTNAME}.key 2048 && \
-	openssl req -config ${CATALINA_HOME}/ssl/openssl.cnf -new -key ${CATALINA_HOME}/ssl/${HOSTNAME}.key -out ${CATALINA_HOME}/ssl/${HOSTNAME}.csr && \
-	openssl x509 -req -days 365 -in ${CATALINA_HOME}/ssl/${HOSTNAME}.csr -signkey ${CATALINA_HOME}/ssl/${HOSTNAME}.key -out ${CATALINA_HOME}/ssl/${HOSTNAME}.crt && \
-	openssl pkcs12 -export -out ${CATALINA_HOME}/ssl/${HOSTNAME}.p12 -inkey ${CATALINA_HOME}/ssl/${HOSTNAME}.key -in ${CATALINA_HOME}/ssl/${HOSTNAME}.crt -password pass:`cat ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt` && \
-	sed -i s/SSL_FILE/ssl\/${HOSTNAME}.p12/g ${CATALINA_HOME}/conf/server.xml && \
+	openssl genrsa -out ${CATALINA_HOME}/ssl/localhost.key 2048 && \
+	openssl req -config ${CATALINA_HOME}/ssl/openssl.cnf -new -key ${CATALINA_HOME}/ssl/localhost.key -out ${CATALINA_HOME}/ssl/localhost.csr && \
+	openssl x509 -req -days 365 -in ${CATALINA_HOME}/ssl/localhost.csr -signkey ${CATALINA_HOME}/ssl/localhost.key -out ${CATALINA_HOME}/ssl/localhost.crt && \
+	openssl pkcs12 -export -out ${CATALINA_HOME}/ssl/localhost.p12 -inkey ${CATALINA_HOME}/ssl/localhost.key -in ${CATALINA_HOME}/ssl/localhost.crt -password pass:`cat ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt` && \
+	sed -i s/SSL_FILE/ssl\/localhost.p12/g ${CATALINA_HOME}/conf/server.xml && \
 	sed -i s/SSL_PASSWORD/`cat ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt`/g ${CATALINA_HOME}/conf/server.xml && \
-	sed -i s/localhost/${HOSTNAME}`/g ${CATALINA_HOME}/conf/server.xml && \
 	rm ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt
 
 VOLUME ["/data"]
