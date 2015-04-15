@@ -1,15 +1,16 @@
 FROM isuper/java-oracle
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
-ENV TOMEE_VERSION 1.7.1
+ENV TOMEE_VERSION 2.0.0-SNAPSHOT
+ENV TOMEE_BUILD 2.0.0-20150415.042917-256
 ENV APR_VERSION 1.5.1
 ENV TC_NATIVE_VERSION 1.1.33
 
 ENV CATALINA_HOME /opt/apache-tomee-${TOMEE_VERSION}
 ENV PATH ${CATALINA_HOME}/bin:$PATH
 
-RUN curl --silent --location --retry 3 \
-		http://archive.apache.org/dist/tomee/tomee-"${TOMEE_VERSION}"/apache-tomee-"${TOMEE_VERSION}"-plus.tar.gz \
+RUN curl --silent --location --retry 3 --cacert /etc/ssl/certs/thawte_Primary_Root_CA.pem \
+		https://repository.apache.org/service/local/repositories/snapshots/content/org/apache/openejb/apache-tomee/${TOMEE_VERSION}/apache-tomee-${TOMEE_BUILD}-plus.tar.gz \
 		| tar xz -C /tmp && \
 	mv /tmp/apache-tomee-plus-${TOMEE_VERSION} ${CATALINA_HOME} && \
 	rm -rf ${CATALINA_HOME}/bin/*.bat \
