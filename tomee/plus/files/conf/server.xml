@@ -21,7 +21,6 @@
     <Listener className="org.apache.catalina.security.SecurityListener" />
     -->
     <Listener SSLEngine="on" className="org.apache.catalina.core.AprLifecycleListener"/>
-    <Listener className="org.apache.catalina.core.JasperListener"/>
     <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"/>
     <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener"/>
     <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener"/>
@@ -50,12 +49,11 @@
                         </Sender>
                         <Interceptor className="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector"/>
                         <Interceptor className="org.apache.catalina.tribes.group.interceptors.MessageDispatch15Interceptor"/>
-                        <Interceptor className="org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor"/>
+                        <Interceptor className="org.apache.catalina.tribes.group.interceptors.ThroughputInterceptor"/>                    
                     </Channel>
                     <Valve className="org.apache.catalina.ha.tcp.ReplicationValve" filter=""/>
                     <Valve className="org.apache.catalina.ha.session.JvmRouteBinderValve"/>
                     <Deployer className="org.apache.catalina.ha.deploy.FarmWarDeployer" deployDir="webapps" tempDir="apps/war-temp" watchDir="apps/war-listen" watchEnabled="false"/>
-                    <ClusterListener className="org.apache.catalina.ha.session.JvmRouteSessionIDBinderListener"/>
                     <ClusterListener className="org.apache.catalina.ha.session.ClusterSessionListener"/>
                 </Cluster>
                 <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
