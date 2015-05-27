@@ -2,7 +2,7 @@ FROM isuper/java-oracle
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 ENV TOMEE_VERSION 1.7.1
-ENV APR_VERSION 1.5.1
+ENV APR_VERSION 1.5.2
 ENV TC_NATIVE_VERSION 1.1.33
 
 ENV CATALINA_HOME /opt/apache-tomee-${TOMEE_VERSION}
