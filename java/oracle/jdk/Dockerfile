@@ -16,9 +16,9 @@ RUN apt-get update && apt-get install ca-certificates curl -y && \
 	apt-get autoclean && apt-get --purge -y autoremove && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN update-alternatives --install "/usr/bin/java" "java" "${JAVA_HOME}/bin/java" 1
-	update-alternatives --install "/usr/bin/javaws" "javaws" "${JAVA_HOME}/bin/javaws" 1
-	update-alternatives --install "/usr/bin/javac" "javac" "${JAVA_HOME}/bin/javac" 1
-	update-alternatives --set java "${JAVA_HOME}/bin/java"
-	update-alternatives --set javaws "${JAVA_HOME}/bin/javaws"
+RUN update-alternatives --install "/usr/bin/java" "java" "${JAVA_HOME}/bin/java" 1 \
+	update-alternatives --install "/usr/bin/javaws" "javaws" "${JAVA_HOME}/bin/javaws" 1 \
+	update-alternatives --install "/usr/bin/javac" "javac" "${JAVA_HOME}/bin/javac" 1 \
+	update-alternatives --set java "${JAVA_HOME}/bin/java" \
+	update-alternatives --set javaws "${JAVA_HOME}/bin/javaws" \
 	update-alternatives --set javac "${JAVA_HOME}/bin/javac"
