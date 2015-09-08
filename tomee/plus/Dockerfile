@@ -65,8 +65,6 @@ RUN openssl rand -hex 8 > ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt && \
 	sed -i "s#SSL_PASSWORD#`cat ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt`#g" ${CATALINA_HOME}/conf/server.xml && \
 	rm ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt
 
-VOLUME ["/data"]
-
 WORKDIR ${CATALINA_HOME}
 
 EXPOSE 8005 8080 8009 8443 45564 4000
