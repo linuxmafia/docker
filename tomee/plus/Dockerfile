@@ -1,6 +1,8 @@
 FROM isuper/java-oracle
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 ENV TOMEE_VERSION 1.7.3
 ENV APR_VERSION 1.5.2
 ENV TC_NATIVE_VERSION 1.2.2
@@ -39,7 +41,7 @@ RUN curl --silent --location --retry 3 \
 	curl --silent --location --retry 3 \
 		http://www.apache.org/dist/tomcat/tomcat-connectors/native/${TC_NATIVE_VERSION}/source/tomcat-native-${TC_NATIVE_VERSION}-src.tar.gz \
 		| tar xz -C /tmp && \
-	cd /tmp/tomcat-native-${TC_NATIVE_VERSION}-src/jni/native && \
+	cd /tmp/tomcat-native-${TC_NATIVE_VERSION}-src/native && \
 		./configure -with-apr=/usr/local/apr/ -with-ssl=/usr -with-java-home=${JAVA_HOME} -prefix=${CATALINA_HOME} && \
 		make clean && make && make install && \
 	apt-get remove --purge --auto-remove -y \
