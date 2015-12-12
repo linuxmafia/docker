@@ -6,17 +6,20 @@ To use this image, you must accept the [Oracle Binary Code License Agreement](ht
 
 ### Docker Tags
 
-`isuper/java-oracle` provides several tagged image:
+`isuper/java-oracle` provides several tagged images:
 
 * `latest` (default): pointed to `isuper/java-oracle:server_jre_latest`
+
 * `server_jre_latest`: pointed to `isuper/java-oracle:server_jre_8`
-* `jre_latest`: pointed to `isuper/java-oracle:jre_8`
-* `jdk_latest`: pointed to `isuper/java-oracle:jdk_8`
 * `server_jre_8`: based on `Oracle Java SE Server Runtime Environment 8 update 66 build 17`
-* `jre_8`: based on `Oracle Java SE Runtime Environment 8 update 66 build 17`
-* `jdk_8`: based on `Oracle Java SE Development Kit 8 update 66 build 17`
 * `server_jre_7`: based on `Oracle Java SE Server Runtime Environment 7 update 80 build 15`
+
+* `jre_latest`: pointed to `isuper/java-oracle:jre_8`
+* `jre_8`: based on `Oracle Java SE Runtime Environment 8 update 66 build 17`
 * `jre_7`: based on `Oracle Java SE Runtime Environment 7 update 80 build 15`
+
+* `jdk_latest`: pointed to `isuper/java-oracle:jdk_8`
+* `jdk_8`: based on `Oracle Java SE Development Kit 8 update 66 build 17`
 * `jdk_7`: based on `Oracle Java SE Development Kit 7 update 80 build 15`
 
 ### Installation
