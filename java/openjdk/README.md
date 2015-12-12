@@ -1,1 +1,0 @@
-## Java provided by OpenJDK
