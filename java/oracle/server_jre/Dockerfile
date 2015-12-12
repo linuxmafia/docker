@@ -2,8 +2,8 @@ FROM isuper/base-ubuntu
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 ENV VERSION 8
-ENV UPDATE 45
-ENV BUILD 14
+ENV UPDATE 66
+ENV BUILD 17
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
 ENV JRE_HOME ${JAVA_HOME}/jre
