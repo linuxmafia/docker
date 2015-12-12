@@ -7,7 +7,7 @@ This repository contains **Dockerfile** of [Ubuntu](http://www.ubuntu.com/) for 
 `isuper/tomee-plus` provides several tagged images:
 
 * `latest` (default): pointed to `1.7.3`
-* `1.7.3` : Tomcat EE version 1.7.3
+* `1.7.3` : Tomcat EE version `1.7.3`
 * `2.0.0-SNAPSHOT` : Tomcat EE version 2.0.0-SNAPSHOT build `2.0.0-20150513.041200-285`
 
 ### Installation
