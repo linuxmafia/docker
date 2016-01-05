@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install ca-certificates curl \
 	https://www.openssl.org/source/openssl-1.0.2e.tar.gz \
 	| tar xz -C /tmp && \
 	cd /tmp/openssl-1.0.2e && \
-		./config && \
+		./config --prefix=/usr && \
 		make clean && make && make install && \
 	apt-get remove --purge --auto-remove -y \
 		gcc \
