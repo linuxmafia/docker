@@ -8,12 +8,25 @@ ENV BUILD 17
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
 ENV JRE_HOME ${JAVA_HOME}/jre
 
-RUN apt-get update && apt-get install ca-certificates curl -y && \
+RUN apt-get update && apt-get install ca-certificates curl \
+        gcc libc6-dev libssl-dev make \
+        -y --no-install-recommends && \
 	curl --silent --location --retry 3 --cacert /etc/ssl/certs/GeoTrust_Global_CA.pem \
 	--header "Cookie: oraclelicense=accept-securebackup-cookie;" \
 	http://download.oracle.com/otn-pub/java/jdk/"${VERSION}"u"${UPDATE}"-b"${BUILD}"/server-jre-"${VERSION}"u"${UPDATE}"-linux-x64.tar.gz \
 	| tar xz -C /tmp && \
 	mkdir -p /usr/lib/jvm && mv /tmp/jdk1.${VERSION}.0_${UPDATE} "${JAVA_HOME}" && \
+	curl --silent --location --retry 3 --cacert /etc/ssl/certs/GlobalSign_Root_CA.pem \
+        https://www.openssl.org/source/openssl-1.0.2e.tar.gz \
+        | tar xz -C /tmp && \
+        cd /tmp/openssl-1.0.2e && \
+                ./config && \
+                make clean && make && make install && \
+        apt-get remove --purge --auto-remove -y \
+                gcc \
+                libc6-dev \
+                libssl-dev \
+                make && \
 	apt-get autoclean && apt-get --purge -y autoremove && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
