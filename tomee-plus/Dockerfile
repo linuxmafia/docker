@@ -23,23 +23,20 @@ RUN curl --silent --location --retry 3 \
 		${CATALINA_HOME}/temp/* \
 		${CATALINA_HOME}/webapps/* \
 		${CATALINA_HOME}/work/* && \
-	mkdir /data && \
-	mv ${CATALINA_HOME}/conf /data/conf && ln -s /data/conf ${CATALINA_HOME}/conf && \
-	mv ${CATALINA_HOME}/logs /data/logs && ln -s /data/logs ${CATALINA_HOME}/logs && \
-	mkdir /data/ssl && ln -s /data/ssl ${CATALINA_HOME}/ssl && \
+	mkdir ${CATALINA_HOME}/ssl && \
 	apt-get update && apt-get install -y --no-install-recommends \
 		gcc \
 		libc6-dev \
 		libssl-dev \
 		make && \
 	curl --silent --location --retry 3 \
-		http://www.apache.org/dist/apr/apr-${APR_VERSION}.tar.gz \
+		http://archive.apache.org/dist/apr/apr-${APR_VERSION}.tar.gz \
 		| tar xz -C /tmp && \
 	cd /tmp/apr-${APR_VERSION} && \
 		./configure && \
 		make clean && make && make install && \
 	curl --silent --location --retry 3 \
-		http://www.apache.org/dist/tomcat/tomcat-connectors/native/${TC_NATIVE_VERSION}/source/tomcat-native-${TC_NATIVE_VERSION}-src.tar.gz \
+		http://archive.apache.org/dist/tomcat/tomcat-connectors/native/${TC_NATIVE_VERSION}/source/tomcat-native-${TC_NATIVE_VERSION}-src.tar.gz \
 		| tar xz -C /tmp && \
 	cd /tmp/tomcat-native-${TC_NATIVE_VERSION}-src/native && \
 		./configure -with-apr=/usr/local/apr/ -with-ssl=/usr -with-java-home=${JAVA_HOME} -prefix=${CATALINA_HOME} && \
@@ -54,6 +51,12 @@ RUN curl --silent --location --retry 3 \
 
 ENV LD_LIBRARY_PATH "${LD_LIBRARY_PATH}:${CATALINA_HOME}/lib"
 
+WORKDIR ${CATALINA_HOME}
+
+EXPOSE 8005 8080 8009 8443 45564 4000
+
+COPY files/bin/* ${CATALINA_HOME}/bin/
+
 COPY files/conf/* ${CATALINA_HOME}/conf/
 RUN sed -i s/SHUTDOWN/`openssl rand -hex 8`/g ${CATALINA_HOME}/conf/server.xml
 
@@ -66,9 +69,5 @@ RUN openssl rand -hex 8 > ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt && \
 	sed -i "s#SSL_FILE#ssl/localhost.p12#g" ${CATALINA_HOME}/conf/server.xml && \
 	sed -i "s#SSL_PASSWORD#`cat ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt`#g" ${CATALINA_HOME}/conf/server.xml && \
 	rm ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt
-
-WORKDIR ${CATALINA_HOME}
-
-EXPOSE 8005 8080 8009 8443 45564 4000
 
 CMD ${CATALINA_HOME}/bin/catalina.sh run

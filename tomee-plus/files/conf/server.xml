@@ -31,15 +31,17 @@
     </GlobalNamingResources>
 
     <Service name="Catalina">
-        <Executor maxThreads="400" minSpareThreads="20" name="tomcatThreadPool" namePrefix="catalina-exec-"/>
-        <Connector port="8080" protocol="org.apache.coyote.http11.Http11NioProtocol" redirectPort="8443" asyncTimeout="150000" connectionTimeout="150000" executor="tomcatThreadPool"/>
-        <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" acceptorThreadCount="2" maxThreads="400" acceptCount="200" minSpareThreads="20" />
-        <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol" SSLEnabled="true" keystoreFile="SSL_FILE" keystoreType="PKCS12" keyPass="SSL_PASSWORD" maxThreads="400" scheme="https" secure="true" sslEnabledProtocols="TLSv1.2,TLSv1.1,TLSv1" sslProtocol="TLS" compression="on" noCompressionUserAgents="gozilla, traviata" compressableMimeType="text/html,text/xml,text/plain,text/css,text/javascript,text/json,application/x-javascript,application/javascript,application/json"/>
-        <Engine defaultHost="localhost" jvmRoute="jvm" name="Catalina">
+        <Executor minSpareThreads="25" maxThreads="400" name="httpNIOThreadPool" namePrefix="http-nio-" prestartminSpareThreads="true" />
+        <Executor minSpareThreads="25" maxThreads="400" name="ajpThreadPool" namePrefix="ajp-" prestartminSpareThreads="true" />
+        <Executor minSpareThreads="25" maxThreads="400" name="httpsNIOThreadPool" namePrefix="https-nio-" prestartminSpareThreads="true" />
+        <Connector port="8080" protocol="org.apache.coyote.http11.Http11NioProtocol" redirectPort="8443" maxConnections="16000" acceptorThreadCount="2" acceptCount="200" executor="httpNIOThreadPool" URIEncoding="UTF-8" />
+        <Connector port="8009" protocol="org.apache.coyote.ajp.AjpNioProtocol" redirectPort="8443" maxConnections="16000" acceptorThreadCount="2" acceptCount="200" executor="ajpThreadPool" URIEncoding="UTF-8" />
+        <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol" maxConnections="16000" acceptorThreadCount="2" acceptCount="200" executor="httpsNIOThreadPool" URIEncoding="UTF-8" SSLEnabled="true" keystoreFile="SSL_FILE" keystoreType="PKCS12" keyPass="SSL_PASSWORD" scheme="https" secure="true" sslEnabledProtocols="TLSv1.2,TLSv1.1,TLSv1" sslProtocol="TLS" compression="on" noCompressionUserAgents="gozilla, traviata" compressableMimeType="text/html,text/xml,text/plain,text/css,text/javascript,text/json,application/x-javascript,application/javascript,application/json" />
+        <Engine defaultHost="${server.hostname}" jvmRoute="${server.id}" name="Catalina">
             <Realm className="org.apache.catalina.realm.LockOutRealm">
                 <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
             </Realm>
-            <Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
+            <Host appBase="webapps" autoDeploy="true" name="${server.hostname}" unpackWARs="true">
                  <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">
                     <Manager className="org.apache.catalina.ha.session.DeltaManager" expireSessionsOnShutdown="false" notifyListenersOnReplication="true"/>
                     <Channel className="org.apache.catalina.tribes.group.GroupChannel">
