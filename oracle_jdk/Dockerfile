@@ -7,6 +7,8 @@ ENV BUILD 15
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
 
+ENV OPENSSL_VERSION 1.0.2f
+
 RUN apt-get update && apt-get install ca-certificates curl \
 	gcc libc6-dev libssl-dev make \
 	-y --no-install-recommends && \
@@ -16,9 +18,9 @@ RUN apt-get update && apt-get install ca-certificates curl \
 	| tar xz -C /tmp && \
 	mkdir -p /usr/lib/jvm && mv /tmp/jdk1.${VERSION}.0_${UPDATE} "${JAVA_HOME}" && \
 	curl --silent --location --retry 3 --cacert /etc/ssl/certs/GlobalSign_Root_CA.pem \
-	https://www.openssl.org/source/openssl-1.0.2e.tar.gz \
+	https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \
 	| tar xz -C /tmp && \
-	cd /tmp/openssl-1.0.2e && \
+	cd /tmp/openssl-${OPENSSL_VERSION} && \
 		./config --prefix=/usr && \
 		make clean && make && make install && \
 	apt-get remove --purge --auto-remove -y \
