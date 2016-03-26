@@ -2,8 +2,8 @@ FROM isuper/base-ubuntu
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 ENV VERSION 8
-ENV UPDATE 72
-ENV BUILD 15
+ENV UPDATE 77
+ENV BUILD 03
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
 
@@ -16,9 +16,9 @@ RUN apt-get update && apt-get install ca-certificates curl \
 	| tar xz -C /tmp && \
 	mkdir -p /usr/lib/jvm && mv /tmp/jre1.${VERSION}.0_${UPDATE} "${JAVA_HOME}" && \
 	curl --silent --location --retry 3 --cacert /etc/ssl/certs/GlobalSign_Root_CA.pem \
-        https://www.openssl.org/source/openssl-1.0.2e.tar.gz \
+        https://www.openssl.org/source/openssl-1.0.2g.tar.gz \
         | tar xz -C /tmp && \
-        cd /tmp/openssl-1.0.2e && \
+        cd /tmp/openssl-1.0.2g && \
                 ./config --prefix=/usr && \
                 make clean && make && make install && \
         apt-get remove --purge --auto-remove -y \
