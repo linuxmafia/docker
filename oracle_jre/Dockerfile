@@ -1,11 +1,15 @@
 FROM isuper/base-ubuntu
 MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
+ENV DEBIAN_FRONTEND noninteractive
+
 ENV VERSION 8
 ENV UPDATE 77
 ENV BUILD 03
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
+
+ENV OPENSSL_VERSION 1.0.2g
 
 RUN apt-get update && apt-get install ca-certificates curl \
         gcc libc6-dev libssl-dev make \
