@@ -11,15 +11,15 @@ To use this image, you must accept the [Oracle Binary Code License Agreement](ht
 * `latest` (default): pointed to `isuper/java-oracle:server_jre_latest`
 
 * `server_jre_latest`: pointed to `isuper/java-oracle:server_jre_8`
-* `server_jre_8`: based on `Oracle Java SE Server Runtime Environment 8 update 77 build 03`
+* `server_jre_8`: based on `Oracle Java SE Server Runtime Environment 8 update 91 build 14`
 * `server_jre_7`: based on `Oracle Java SE Server Runtime Environment 7 update 80 build 15`
 
 * `jre_latest`: pointed to `isuper/java-oracle:jre_8`
-* `jre_8`: based on `Oracle Java SE Runtime Environment 8 update 77 build 03`
+* `jre_8`: based on `Oracle Java SE Runtime Environment 8 update 91 build 14`
 * `jre_7`: based on `Oracle Java SE Runtime Environment 7 update 80 build 15`
 
 * `jdk_latest`: pointed to `isuper/java-oracle:jdk_8`
-* `jdk_8`: based on `Oracle Java SE Development Kit 8 update 77 build 03`
+* `jdk_8`: based on `Oracle Java SE Development Kit 8 update 91 build 14`
 * `jdk_7`: based on `Oracle Java SE Development Kit 7 update 80 build 15`
 
 ### Installation
