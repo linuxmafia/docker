@@ -61,6 +61,7 @@
                     <ClusterListener className="org.apache.catalina.ha.session.ClusterSessionListener"/>
                 </Cluster>
                 <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
+		<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" prefix="${server.hostname}_access_log." suffix=".log" pattern="%h %l %u %t &quot;%r&quot; %s %b" />
             </Host>    
         </Engine>
     </Service>
