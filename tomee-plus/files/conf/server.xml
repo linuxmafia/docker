@@ -43,7 +43,6 @@
             </Realm>
             <Host appBase="webapps" autoDeploy="true" name="${server.hostname}" unpackWARs="true">
                  <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">
-                    <Manager className="org.apache.catalina.ha.session.DeltaManager" expireSessionsOnShutdown="false" notifyListenersOnReplication="true"/>
                     <Channel className="org.apache.catalina.tribes.group.GroupChannel">
                         <Membership address="228.0.0.4" port="45564" className="org.apache.catalina.tribes.membership.McastService" dropTime="3000" frequency="500"/>
                         <Receiver address="auto" autoBind="100" className="org.apache.catalina.tribes.transport.nio.NioReceiver" maxThreads="6" port="4000" selectorTimeout="5000"/>
