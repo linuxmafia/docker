@@ -4,12 +4,12 @@ MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV VERSION 8
-ENV UPDATE 102
-ENV BUILD 14
+ENV UPDATE 112
+ENV BUILD 15
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
 
-ENV OPENSSL_VERSION 1.0.2h
+ENV OPENSSL_VERSION 1.0.2j
 
 RUN apt-get update && apt-get install ca-certificates curl \
         gcc libc6-dev libssl-dev make \
