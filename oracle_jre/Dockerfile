@@ -6,8 +6,10 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV VERSION 8
 ENV UPDATE 121
 ENV BUILD 13
+ENV SIG e9e7ea248e2c4826b92b3f075a80e441
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
+ENV JRE_HOME ${JAVA_HOME}/jre
 
 ENV OPENSSL_VERSION 1.0.2j
 
@@ -16,7 +18,7 @@ RUN apt-get update && apt-get install ca-certificates curl \
         -y --no-install-recommends && \
 	curl --silent --location --retry 3 --cacert /etc/ssl/certs/GeoTrust_Global_CA.pem \
 	--header "Cookie: oraclelicense=accept-securebackup-cookie;" \
-	http://download.oracle.com/otn-pub/java/jdk/"${VERSION}"u"${UPDATE}"-b"${BUILD}"/jre-"${VERSION}"u"${UPDATE}"-linux-x64.tar.gz \
+	http://download.oracle.com/otn-pub/java/jdk/"${VERSION}"u"${UPDATE}"-b"${BUILD}"/${"SIG"}/jre-"${VERSION}"u"${UPDATE}"-linux-x64.tar.gz \
 	| tar xz -C /tmp && \
 	mkdir -p /usr/lib/jvm && mv /tmp/jre1.${VERSION}.0_${UPDATE} "${JAVA_HOME}" && \
 	curl --silent --location --retry 3 --cacert /etc/ssl/certs/GlobalSign_Root_CA.pem \
