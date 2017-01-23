@@ -4,8 +4,8 @@ MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV VERSION 8
-ENV UPDATE 112
-ENV BUILD 15
+ENV UPDATE 121
+ENV BUILD 13
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
 ENV JRE_HOME ${JAVA_HOME}/jre
