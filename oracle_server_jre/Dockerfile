@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install ca-certificates curl \
         -y --no-install-recommends && \
 	curl --silent --location --retry 3 --cacert /etc/ssl/certs/GeoTrust_Global_CA.pem \
 	--header "Cookie: oraclelicense=accept-securebackup-cookie;" \
-	http://download.oracle.com/otn-pub/java/jdk/"${VERSION}"u"${UPDATE}"-b"${BUILD}"/${"SIG"}/server-jre-"${VERSION}"u"${UPDATE}"-linux-x64.tar.gz \
+	http://download.oracle.com/otn-pub/java/jdk/"${VERSION}"u"${UPDATE}"-b"${BUILD}"/"${SIG}"/server-jre-"${VERSION}"u"${UPDATE}"-linux-x64.tar.gz \
 	| tar xz -C /tmp && \
 	mkdir -p /usr/lib/jvm && mv /tmp/jdk1.${VERSION}.0_${UPDATE} "${JAVA_HOME}" && \
 	curl --silent --location --retry 3 --cacert /etc/ssl/certs/GlobalSign_Root_CA.pem \
