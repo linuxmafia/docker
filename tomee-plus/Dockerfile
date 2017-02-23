@@ -3,9 +3,9 @@ MAINTAINER Super Wayne <super.x.wayne@gmail.com>
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV TOMEE_VERSION 7.0.0
+ENV TOMEE_VERSION 7.0.2
 ENV APR_VERSION 1.5.2
-ENV TC_NATIVE_VERSION 1.2.7
+ENV TC_NATIVE_VERSION 1.2.10
 
 ENV CATALINA_HOME /opt/apache-tomee-${TOMEE_VERSION}
 ENV PATH ${CATALINA_HOME}/bin:$PATH
@@ -61,13 +61,14 @@ COPY files/conf/* ${CATALINA_HOME}/conf/
 RUN sed -i s/SHUTDOWN/`openssl rand -hex 8`/g ${CATALINA_HOME}/conf/server.xml
 
 COPY files/ssl/* ${CATALINA_HOME}/ssl/
-RUN openssl rand -hex 8 > ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt && \
-	openssl genrsa -out ${CATALINA_HOME}/ssl/localhost.key 2048 && \
-	openssl req -config ${CATALINA_HOME}/ssl/openssl.cnf -new -key ${CATALINA_HOME}/ssl/localhost.key -out ${CATALINA_HOME}/ssl/localhost.csr && \
-	openssl x509 -req -days 365 -in ${CATALINA_HOME}/ssl/localhost.csr -signkey ${CATALINA_HOME}/ssl/localhost.key -out ${CATALINA_HOME}/ssl/localhost.crt && \
-	openssl pkcs12 -export -out ${CATALINA_HOME}/ssl/localhost.p12 -inkey ${CATALINA_HOME}/ssl/localhost.key -in ${CATALINA_HOME}/ssl/localhost.crt -password pass:`cat ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt` && \
-	sed -i "s#SSL_FILE#ssl/localhost.p12#g" ${CATALINA_HOME}/conf/server.xml && \
-	sed -i "s#SSL_PASSWORD#`cat ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt`#g" ${CATALINA_HOME}/conf/server.xml && \
-	rm ${CATALINA_HOME}/ssl/SSL_PASSWORD.txt
+RUN openssl genrsa -out ${CATALINA_HOME}/ssl/localhost.key.pem 2048 && \
+	openssl req -config ${CATALINA_HOME}/ssl/openssl.cnf -new -key ${CATALINA_HOME}/ssl/localhost.key.pem -out ${CATALINA_HOME}/ssl/localhost.csr.pem && \
+	openssl x509 -req -days 365 -in ${CATALINA_HOME}/ssl/localhost.csr.pem -signkey ${CATALINA_HOME}/ssl/localhost.key.pem -out ${CATALINA_HOME}/ssl/localhost.cert.pem && \
+	sed -i "s#SSL_PRIVKEY_FILE#ssl/localhost.key.pem#g" ${CATALINA_HOME}/conf/server.xml && \
+	sed -i "s#SSL_PRIVKEY_PASSWORD##g" ${CATALINA_HOME}/conf/server.xml && \
+	sed -i "s#SSL_CERT_FILE#ssl/localhost.cert.pem#g" ${CATALINA_HOME}/conf/server.xml && \
+	sed -i "s#SSL_CERT_CHAIN_FILE#ssl/localhost.cert.pem#g" ${CATALINA_HOME}/conf/server.xml && \
+	sed -i "s#SSL_CERT_TYPE#RSA#g" ${CATALINA_HOME}/conf/server.xml && \
+	rm ${CATALINA_HOME}/ssl/localhost.csr.pem
 
 CMD ${CATALINA_HOME}/bin/catalina.sh run
