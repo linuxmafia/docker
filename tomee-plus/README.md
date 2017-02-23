@@ -6,8 +6,8 @@ This repository contains **Dockerfile** of [Ubuntu](http://www.ubuntu.com/) for 
 
 `isuper/tomee-plus` provides several tagged images:
 
-* `latest` (default): pointed to `7.0.0`
-* `7.0.0` : Tomcat EE version `7.0.0`
+* `latest` (default): pointed to `7.0.2`
+* `7.0.2` : Tomcat EE version `7.0.2`
 * `1.7.4` : Tomcat EE version `1.7.4`
 * `1.7.3` : Tomcat EE version `1.7.3`
 
